@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${producto.id != null} ? 'Editar Producto' : 'Nuevo Producto'">Formulario de Producto</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container my-5">
+    <h1 th:text="${producto.id != null} ? 'Editar Producto' : 'Nuevo Producto'" class="text-center mb-4"></h1>
+    <form th:action="@{/producto/guardar}" th:object="${producto}" method="post" class="needs-validation" novalidate>
+        <input type="hidden" th:field="*{id}"/>
+        
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required>
+            <div class="invalid-feedback">El nombre es requerido.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="precio">Precio</label>
+            <input type="number" id="precio" th:field="*{precio}" class="form-control" step="0.01" required>
+            <div class="invalid-feedback">El precio es requerido.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock</label>
+            <input type="number" id="stock" th:field="*{stock}" class="form-control" required>
+            <div class="invalid-feedback">El stock es requerido.</div>
+        </div>
+		
+		<div class="form-group">
+		    <label for="imagen">Imagen (URL)</label>
+		    <input type="text" id="imagen" th:field="*{imagen}" class="form-control" placeholder="Ingrese la URL de la imagen" required>
+		    <div class="invalid-feedback">La URL de la imagen es requerida.</div>
+		</div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="/producto/vista" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+// Validación de formulario de Bootstrap
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>
+</body>
+</html>
