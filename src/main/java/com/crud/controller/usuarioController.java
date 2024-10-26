@@ -53,10 +53,24 @@ public class usuarioController {
 	}
 	
 	@PostMapping("/registro")
-    public String Registro(@ModelAttribute("usuario") usuario usuario) {
-        return usuService.create(usuario, passwordEncoder) != null ? 
-            "redirect:/usuario/lista?exito" : "redirect:/usuario/lista?error";
-    }
+	public String Registro(@ModelAttribute("usuario") usuario usuario) {
+		
+		if(usuario.getId() != null) {
+			
+			usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+			usuService.create(usuario);
+			
+			return "redirect:/usuario/lista?editado";
+			
+		}else {
+		
+		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+		usuService.create(usuario);
+		
+		return "redirect:/usuario/lista?exito";
+		
+		}
+	}
 	
 	@GetMapping("/{id}/editar")
 	public String MuestraEdicion(@PathVariable Long id, Model model) {

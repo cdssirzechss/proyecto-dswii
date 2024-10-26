@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contacto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Contacto</h1>
+        
+        <div th:if="${mensaje}" class="alert alert-success" role="alert">
+            <p th:text="${mensaje}"></p>
+        </div>
+
+        <form th:action="@{/contacto}" th:object="${contacto}" method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" required>
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Mensaje</label>
+                <textarea class="form-control" id="mensaje" th:field="*{mensaje}" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+			<a href="/usuario" class="btn btn-secondary">Volver</a> 
+        </form>
+    </div>
+</body>
+</html>

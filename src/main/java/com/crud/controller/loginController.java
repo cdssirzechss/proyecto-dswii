@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.crud.model.producto;
 
 import com.crud.servicios.productoService;
@@ -19,11 +21,13 @@ public class loginController {
     @Autowired
     private productoService productoService;
     
-	@GetMapping("/login")
-	public String iniciarSesion() {
-		return "login";
-		
-	}
+    @GetMapping("/login")
+    public String loginPage(Model model, @RequestParam(required = false) String logout) {
+        if (logout != null) {
+            model.addAttribute("mensaje", "Has cerrado sesión exitosamente.");
+        }
+        return "login"; // Asegúrate de que esta sea la vista correcta
+    }
 	
 	@GetMapping("/")
 	public String verPaginaDeInicio(Authentication auth,  Model modelo) {
@@ -50,11 +54,9 @@ public class loginController {
 
 	@GetMapping("/usuario")
 	public String usuario_vista(Authentication auth, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String userEmail = authentication.isAuthenticated() ? authentication.getName() : null;
 
 		List<producto> productos = productoService.findAll();
-		model.addAttribute("userEmail", userEmail);
+		model.addAttribute("userEmail", auth.getName().toString());
 		model.addAttribute("productos", productos);
 		return "index";
 	}

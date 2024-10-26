@@ -6,13 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name = "producto")
+@Table(name = "producto", uniqueConstraints = @UniqueConstraint(columnNames = "nombre"))
 public class producto {
 
     @Id
@@ -24,6 +25,7 @@ public class producto {
 
     @Column(name = "descripcion", length = 500)
     private String descripcion;
+    
     @Column(name = "precio", nullable = false)
     private Double precio; 
 

@@ -1,18 +1,32 @@
 package com.crud.controller;
 
 import com.crud.model.producto;
+import com.crud.model.usuario;
+import com.crud.repository.productoRepository;
 import com.crud.servicios.productoService;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/producto")
 public class productoController {
 
+	@Autowired
+	private productoRepository prodrepo;
+	
     @Autowired
     private productoService prodService;
+    
+    @ModelAttribute("producto")
+	public producto model() {
+		return new producto();
+	}
 
     @GetMapping("/vista")
     public String mostrarProductos(Model model) {
@@ -22,15 +36,28 @@ public class productoController {
 
     @GetMapping("/nuevo")
     public String mostrarFormularioNuevoProducto(Model model) {
-        model.addAttribute("producto", new producto()); 
         return "formProducto"; 
     }
 
     @PostMapping("/guardar")
-    public String guardarProducto(@ModelAttribute producto producto) {
+    public String guardarProducto(@ModelAttribute producto producto, Model model) {
+        Optional<producto> existingProduct = prodrepo.findByNombre(producto.getNombre());
+        
+        if (existingProduct.isPresent()) {
+
+            model.addAttribute("mensaje", "Error: Ya existe un producto con el nombre: " + producto.getNombre() + ". Por favor, elige otro nombre.");
+
+            model.addAttribute("producto", producto);
+            return "formProducto";  
+            
+        }
+
         prodService.create(producto);
-        return "redirect:/producto/vista";
+        model.addAttribute("mensaje", "Producto creado exitosamente.");
+        
+        return "redirect:/producto/vista";  
     }
+
 
     @GetMapping("/editar/{id}")
     public String editarProducto(@PathVariable Long id, Model model) {

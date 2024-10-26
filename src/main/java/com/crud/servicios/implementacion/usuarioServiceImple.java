@@ -21,6 +21,9 @@ import com.crud.repository.usuarioRepository;
 @Service
 public class usuarioServiceImple implements usuarioService, UserDetailsService{
 	
+	
+    private BCryptPasswordEncoder passwordEncoder; 
+	
 	@Autowired
 	private usuarioRepository usuRepo;
 	
@@ -54,9 +57,10 @@ public class usuarioServiceImple implements usuarioService, UserDetailsService{
 		usuRepo.deleteById(id);
 	}
 	
-	public usuario create(usuario usuario, BCryptPasswordEncoder passwordEncoder) {
+	public usuario create(usuario usuario) {
+        // Encriptar la contraseña antes de guardar
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        return usuRepo.save(usuario);
+        return usuRepo.save(usuario); // Guardar el usuario en la base de datos
     }
 
 }

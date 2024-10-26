@@ -24,17 +24,17 @@
 					<a class="nav-link" th:href="@{/contacto}">Contacto</a>
                 </li>
             </ul>
-			<div class="form-inline">
-			    <div th:if="${userEmail != null}">
-			        <span th:text="${userEmail}"></span>
-			        <form action="" method="post" style="display:inline;">
-						<a href="/logout" class="btn btn-danger my-2 my-sm-0">Salir</a>
-			        </form>
-			    </div>
-			    <div th:if="${userEmail == null}">
-			        <a href="/login" class="btn btn-outline-primary my-2 my-sm-0">Iniciar Sesión</a>
-			    </div>
-			</div>
+            <form class="form-inline">
+                <div th:if="${userEmail != null}">
+                    <span th:text="${userEmail}"></span>
+                    <form action="login?logout" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-outline-danger my-2 my-sm-0">Salir</button>
+                    </form>
+                </div>
+                <div th:if="${userEmail == null}">
+                    <a href="/login" class="btn btn-outline-primary my-2 my-sm-0">Iniciar Sesión</a>
+                </div>
+            </form>
         </div>
     </nav>
 

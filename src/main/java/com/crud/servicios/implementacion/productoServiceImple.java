@@ -1,6 +1,8 @@
 package com.crud.servicios.implementacion;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.crud.model.producto;
@@ -15,7 +17,7 @@ public class productoServiceImple implements productoService {
 
     @Override
     public producto create(producto producto) {
-        return prodRepo.save(producto);
+    	return prodRepo.save(producto);
     }
 
     @Override
@@ -32,4 +34,5 @@ public class productoServiceImple implements productoService {
     public void delete(Long id) {
         prodRepo.deleteById(id);
     }
+	
 }

@@ -39,17 +39,17 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/usuario/registro", "/js/**", "/css/**", "/img/**" ,"/usuario","/ventas").permitAll()
+                .requestMatchers("/usuario/registro", "/js/**", "/css/**", "/img/**").permitAll()
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/login")
                 .permitAll())
             .logout(logout -> logout
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/usuario?logout")
-                .permitAll());
+            	    .invalidateHttpSession(true) // Invalida la sesión HTTP
+            	    .clearAuthentication(true) // Limpia la autenticación
+            	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // Coincide con solicitudes POST a /login
+            	    .logoutSuccessUrl("/login?logout") // Redirige a esta URL después de cerrar sesión
+            	    .permitAll());
 
         return http.build();
     }
