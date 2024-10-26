@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>CRUD de Productos</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>CRUD de Productos</h2>
+
+        <!-- Formulario para Crear o Editar Producto -->
+        <form action="/producto/guardar" method="post" id="productoForm">
+            <input type="hidden" name="id" id="productoId" />
+            <div class="form-group">
+                <label for="nombre">Nombre del Producto</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio</label>
+                <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad en Stock</label>
+                <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Producto</button>
+        </form>
+
+        <!-- Tabla para Listar Productos -->
+        <h3 class="mt-5">Lista de Productos</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se llenará la tabla con los productos desde el backend -->
+                <tr>
+                    <td>1</td>
+                    <td>Ejemplo Producto</td>
+                    <td>Descripción del producto.</td>
+                    <td>19.99</td>
+                    <td>10</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editProduct(1)">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteProduct(1)">Eliminar</button>
+                    </td>
+                </tr>
+                <!-- Repetir el bloque de <tr> por cada producto en la lista -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Función para llenar el formulario para editar
+        function editProduct(id) {
+            // Aquí deberías realizar una llamada AJAX para obtener los detalles del producto por ID
+            // Y luego llenar el formulario con los datos obtenidos.
+            document.getElementById('productoId').value = id;
+            document.getElementById('nombre').value = "Nombre del producto"; // Ejemplo
+            document.getElementById('descripcion').value = "Descripción del producto"; // Ejemplo
+            document.getElementById('precio').value = "19.99"; // Ejemplo
+            document.getElementById('cantidad').value = "10"; // Ejemplo
+        }
+
+        // Función para eliminar producto
+        function deleteProduct(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+                // Aquí deberías realizar una llamada AJAX para eliminar el producto por ID
+                console.log("Producto eliminado: " + id);
+            }
+        }
+    </script>
+</body>
+</html>

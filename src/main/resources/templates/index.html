@@ -25,7 +25,6 @@
                 </li>
             </ul>
             <form class="form-inline">
-                <!-- Condición para mostrar el botón de inicio de sesión o el correo del usuario -->
                 <div th:if="${userEmail != null}">
                     <span th:text="${userEmail}"></span>
                     <form action="login?logout" method="post" style="display:inline;">
@@ -43,32 +42,16 @@
         <h1 class="text-center">Bienvenido a Nuestra Tienda</h1>
         <p class="text-center">Encuentra los mejores productos aquí.</p>
         <div class="row mt-4">
-            <div class="col-md-4">
+            <div class="col-md-4" th:each="producto : ${productos}">
                 <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Producto 1">
+                    <img th:src="@{${producto.imagen}}" class="card-img-top" alt="Producto" />
                     <div class="card-body">
-                        <h5 class="card-title">Producto 1</h5>
-                        <p class="card-text">Descripción breve del producto 1.</p>
-                        <a href="#" class="btn btn-primary">Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Producto 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Producto 2</h5>
-                        <p class="card-text">Descripción breve del producto 2.</p>
-                        <a href="#" class="btn btn-primary">Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Producto 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Producto 3</h5>
-                        <p class="card-text">Descripción breve del producto 3.</p>
+                        <h5 class="card-title" th:text="${producto.nombre}"></h5>
+                        <p class="card-text" th:text="${producto.descripcion}"></p>
+                        <p class="card-text">
+                            <strong>Precio: </strong>
+                            <span th:text="${producto.precio}"></span> €
+                        </p>
                         <a href="#" class="btn btn-primary">Agregar al Carrito</a>
                     </div>
                 </div>
